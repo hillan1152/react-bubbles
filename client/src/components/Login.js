@@ -1,5 +1,16 @@
 import React from "react";
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+
+import styled from 'styled-components';
+
+const FormDiv = styled.form`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    margin-left: 50%;
+`
 
 class Login extends React.Component {
   // make a post request to retrieve a token from the api
@@ -27,15 +38,16 @@ class Login extends React.Component {
       .post('http://localhost:5000/api/login', this.state.credentials)
       .then(res => {
         localStorage.setItem('token', res.data.payload);
-        this.props.history.push('/protected')
+        this.props.history.push('/bubblepage')
       })
       .catch(err => console.log(err.response))
   }
   
   render() {
+
   return (
     <>
-      <form onSubmit={this.login}>
+      <FormDiv onSubmit={this.login}>
         <input
           type="text"
           name="username"
@@ -51,7 +63,7 @@ class Login extends React.Component {
           onChange={this.changeHandler}
         />
         <button>Log In</button>
-      </form>
+      </FormDiv>
     </>
     );
   }

@@ -10,16 +10,13 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Link to="/login">Login</Link>
-        <Link to="/bubblepage">Bubble Page</Link>
-        <Switch>
-          <Route exact path="/" component={Login} />
+        {/* <Link to="/login">Login</Link> */}
+          <Route exact path="/login" component={Login} />
           <PrivateRoute path="/bubblepage" component={BubblePage}/>
         {/* 
           Build a PrivateRoute component that will 
           display BubblePage when you're authenticated 
         */}
-        </Switch>
       </div>
     </Router>
   );

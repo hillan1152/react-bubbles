@@ -1,43 +1,60 @@
-import React, { useState, useEffect } from "react";
-import { axiosAuth } from '../utils/axiosAuth';
+import React from "react";
+import axios from 'axios';
 
-const Login = () => {
+class Login extends React.Component {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
-  let [info, setInfo] = useState({
-    username:'', 
-    password: ''
-  })
+  state = {
+    credentials: {
+      username:'', 
+      password: ''
+    }
+  };
 
-  useEffect({
-    setInfo
-  }, [])
-
-  let changeHandler = () => {
-    
+  changeHandler = e => {
+    this.setState({
+      credentials: {
+        ...this.state.credentials,
+        [e.target.name]: e.target.value
+      }
+    })
   }
 
-  let login = e => {
+  login = e => {
     e.preventDefault();
-    axiosAuth()
-      .post('/api/login', info)
-      .then(res => console.log(res))
+    console.log(this.state.credentials)
+    axios
+      .post('http://localhost:5000/api/login', this.state.credentials)
+      .then(res => {
+        localStorage.setItem('token', res.data.payload);
+        this.props.history.push('/protected')
+      })
       .catch(err => console.log(err.response))
   }
   
-
+  render() {
   return (
     <>
-      <form onSubmit={login}>
+      <form onSubmit={this.login}>
         <input
           type="text"
           name="username"
-          value={info.username}
-          handleChanges={changeHandler}
+          placeholder="Username"
+          value={this.state.credentials.username}
+          onChange={this.changeHandler}
         />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={this.state.credentials.password}
+          onChange={this.changeHandler}
+        />
+        <button>Log In</button>
       </form>
     </>
-  );
+    );
+  }
 };
 
 export default Login;

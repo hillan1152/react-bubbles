@@ -16,7 +16,7 @@ const Login = (props) => {
   // when you have handled the token, navigate to the BubblePage route
   const login = (e) => {
     e.preventDefault();
-    axiosWithAuth().post('/api/login', { username: 'Lambda', password: '1234' })
+    axiosWithAuth().post('/api/login', input)
       .then(res => {
         console.log('Login Res', res.data.payload)
         localStorage.setItem('token', res.data.payload)

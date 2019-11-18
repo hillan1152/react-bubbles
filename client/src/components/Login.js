@@ -8,7 +8,6 @@ const FormDiv = styled.form`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid black;
     margin-left: 50%;
 `
 
@@ -31,8 +30,8 @@ class Login extends React.Component {
     })
   }
 
-  login = e => {
-    e.preventDefault();
+  login = ev => {
+    ev.preventDefault();
     console.log(this.state.credentials)
     axios
       .post('http://localhost:5000/api/login', this.state.credentials)
